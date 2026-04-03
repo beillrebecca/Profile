@@ -102,7 +102,6 @@ function createCard(item, index) {
         <a class="link-display" href="${item.link || '#'}" target="_blank">
          ${item.link || "リンクを入力"}
         </a>
-        <button class="edit-link-btn">編集</button>
       </div>
     </div>
 
