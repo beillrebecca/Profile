@@ -495,6 +495,41 @@ document.addEventListener("DOMContentLoaded", () => {
     openComments(currentCommentIndex);
   });
 
-  // フォロー/フォロワーモーダル
-  initFollowModal();
+  // =========================
+// フォロー / フォロワーモーダル制御
+// =========================
+function initFollowModal() {
+  const followingBtn = document.getElementById('followingBtn');
+  const followersBtn = document.getElementById('followersBtn');
+  const followModal = document.getElementById('followModal');
+  const followerModal = document.getElementById('followerModal');
+
+  console.log('followingBtn:', followingBtn, 'followModal:', followModal);
+
+  if (!followingBtn || !followModal) {
+    console.warn('フォローボタンまたはモーダルが取得できません');
+    return;
+  }
+
+  followingBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    followModal.style.display = "flex";
+  });
+
+  followersBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    followerModal.style.display = "flex";
+  });
+
+  [followModal, followerModal].forEach(modal => {
+    if (!modal) return;
+    const closeBtn = modal.querySelector('.close-btn');
+    closeBtn?.addEventListener('click', () => modal.style.display = 'none');
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.style.display = 'none';
+    });
+  });
+}
+
 });
