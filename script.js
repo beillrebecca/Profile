@@ -119,43 +119,52 @@ function createCard(item, index) {
 // =========================
 // ショーケース描画
 // =========================
+// =========================
+// プロフィールページ用ショーケース描画
+// =========================
 function renderShowcaseProfile() {
   const showcase = document.getElementById("showcase");
-  if (!showcase) return;
-
-  showcase.innerHTML = ""; // まずリセット
-
-  if (!items || items.length === 0) {
-    // アイテムがない場合でも枠だけ表示
-    const emptyMsg = document.createElement("div");
-    emptyMsg.className = "showcase-empty-msg";
-    emptyMsg.textContent = "まだアイテムはありません";
-    showcase.appendChild(emptyMsg);
+  if (!showcase) {
+    console.warn("showcase要素が見つかりません");
     return;
   }
 
-  // アイテムがある場合は通常通り描画
+  showcase.innerHTML = ""; // まずリセット
+
+  // 初期アイテム4枚
+  if (!items || items.length === 0) {
+    items = [
+      { id: 1, name: "アイテム1", price: "¥0", link: "", img: "", liked: false, saved: false, clicks: 0 },
+      { id: 2, name: "アイテム2", price: "¥0", link: "", img: "", liked: false, saved: false, clicks: 0 },
+      { id: 3, name: "アイテム3", price: "¥0", link: "", img: "", liked: false, saved: false, clicks: 0 },
+      { id: 4, name: "アイテム4", price: "¥0", link: "", img: "", liked: false, saved: false, clicks: 0 }
+    ];
+  }
+
+  // カード描画
   items.forEach((item, index) => {
     try {
-      const card = createCard(item, index);
+      const card = createCard(item, index); // createCard関数は既存のままでOK
       showcase.appendChild(card);
 
       const nameEl = card.querySelector(".card-name");
       const priceEl = card.querySelector(".card-price");
 
-      if (nameEl && typeof item.fontColorName === "string") {
-        nameEl.style.color = item.fontColorName;
-      }
-
-      if (priceEl && item.fontColorPrice) {
-        priceEl.style.color = item.fontColorPrice;
-      }
+      if (nameEl && typeof item.fontColorName === "string") nameEl.style.color = item.fontColorName;
+      if (priceEl && item.fontColorPrice) priceEl.style.color = item.fontColorPrice;
 
     } catch (err) {
       console.error("カード描画失敗", item, err);
     }
   });
 }
+
+// =========================
+// DOM準備後に描画
+// =========================
+document.addEventListener("DOMContentLoaded", () => {
+  renderShowcaseProfile();
+});
 
 // =========================
 // デフォルトアイテム取得
