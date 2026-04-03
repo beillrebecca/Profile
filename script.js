@@ -148,18 +148,6 @@ function renderShowcaseLight() {
     }
   });
 
-  // 🔹 「新しいアイテム追加」ボタン
-  const addWrapper = document.createElement("div");
-  addWrapper.className = "showcase-add-card-wrapper";
-
-  const addBtn = document.createElement("button");
-  addBtn.id = "addCardBtn";
-  addBtn.className = "showcase-add-card-btn";
-  addBtn.textContent = "＋ 新しいアイテムを追加";
-
-  addWrapper.appendChild(addBtn);
-  showcase.appendChild(addWrapper);
-
   addBtn.addEventListener("click", () => {
   const newItem = {
     id: Date.now(),
@@ -176,7 +164,6 @@ function renderShowcaseLight() {
     likes: 0
   };
 
-  items.push(newItem);
 
   // 🔥 ここが超重要
   renderShowcaseLight();
@@ -710,9 +697,6 @@ if (commentModal) {
 }
 
 
-  const fontSelect = document.getElementById('fontSelect');
-  if (fontSelect) fontSelect.addEventListener('change', e => document.documentElement.style.setProperty('--font-family', e.target.value));
-
   setupImageUpload(document.getElementById('headerImg'), document.getElementById('headerImgInput'));
   setupImageUpload(document.getElementById('avatarImg'), document.getElementById('avatarImgInput'));
 
@@ -758,20 +742,7 @@ function initFollowModal() {
 
   initFollowModal();
 
-
-// =========================
-// リンク編集モーダル：背景クリックで閉じる
-// =========================
-const linkModal = document.getElementById("linkModal");
-if (linkModal) {
-  linkModal.addEventListener("click", e => {
-    if (e.target.id === "linkModal") {
-      linkModal.classList.remove("active");
-    }
-  });
-}
   
-
 
 
   // アナウンスバー入力反映
