@@ -114,19 +114,16 @@ function createCard(item, index) {
     </div>
   `;
 
-  return card;
-}
-
-// =========================
+  // =========================
 // ショーケース描画
 // =========================
-function renderShowcaseLight() {
+function renderShowcaseReadOnly() {
   const showcase = document.getElementById("showcase");
   if (!showcase) return;
 
   showcase.innerHTML = ""; // まずリセット
 
-  // 🔹 安全にカード描画
+  // 安全にカード描画
   items.forEach((item, index) => {
     try {
       const card = createCard(item, index);
@@ -136,38 +133,17 @@ function renderShowcaseLight() {
       const priceEl = card.querySelector(".card-price");
 
       if (nameEl && typeof item.fontColorName === "string") {
-      nameEl.style.color = item.fontColorName;
+        nameEl.style.color = item.fontColorName;
       }
 
       if (priceEl && item.fontColorPrice) {
-      priceEl.style.color = item.fontColorPrice;
+        priceEl.style.color = item.fontColorPrice;
       }
 
     } catch (err) {
       console.error("カード描画失敗", item, err);
     }
   });
-
-  const newItem = {
-    id: Date.now(),
-    name: `アイテム${items.length + 1}`,
-    price: "¥0",
-    link: "",
-    img: "",
-    liked: false,
-    saved: false,
-    clicks: 0,
-    fontColorName: "#000",
-    fontColorPrice: "#000",
-    comments: [],
-    likes: 0
-  };
-
-
-  // 🔥 ここが超重要
-  renderShowcaseLight();
-});
-
 }
 
 // =========================
