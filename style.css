@@ -770,20 +770,6 @@ body.theme-modern .card-actions svg {
 }
 
 
-.announcement-text-row,
-.announcement-fontcolor-row,
-.announcement-bg-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 8px;
-}
-.announcement-text-row label,
-.announcement-fontcolor-row label,
-.announcement-bg-row label {
-  width: 100px; /* ラベル幅固定で揃える */
-}
-
 /* =========================
    ショーケース内 追加ボタン
 ========================= */
