@@ -444,48 +444,6 @@ function openComments(index) {
 }
 
 // =========================
-// ポップアップリンク編集（カードDOM版）
-// =========================
-function showLinkEditPopup(card) {
-  const popup = document.getElementById("linkModal"); // ←ここを修正
-  if (!popup) {
-    console.error("linkModal が存在しません");
-    return;
-  }
-
-  const input = document.getElementById("linkModalInput"); // input もID指定に変更
-  const btn = document.getElementById("linkModalSaveBtn"); // button もID指定
-
-  if (!input || !btn) {
-    console.error("popup 内の input または button が見つかりません");
-    return;
-  }
-
-  const linkDisplay = card.querySelector(".link-display");
-  input.value = linkDisplay ? linkDisplay.textContent : "";
-
-  popup.classList.add('active');
-  input.focus();
-
-  btn.onclick = () => {
-    let newLink = input.value.trim();
-    if (newLink && !newLink.startsWith("http")) newLink = "https://" + newLink;
-
-    if (linkDisplay) {
-      linkDisplay.textContent = newLink || "リンクを入力";
-      linkDisplay.href = newLink || "#"; 
-    }
-
-    const showcaseEl = document.getElementById("showcase");
-    const cards = Array.from(showcaseEl.querySelectorAll(".card"));
-    const index = cards.indexOf(card);
-    if (items[index]) items[index].link = newLink;
-
-    popup.classList.remove('active'); // 非表示
-  };
-}
-
-// =========================
 // 保存（アプリ全体）
 // =========================
 function saveAppState_FULL() {
@@ -695,138 +653,7 @@ function loadAppState() {
 
   // 🔴 ここが超重要
   renderShowcaseLight();
-  alert("⑨ renderShowcaseLight 実行完了");
-}
-
-// =========================
-// 共通関数（画像アップロード・カラーピッカー）
-// =========================
-function initPickr() {
-  const pickrConfigs = [
-    { 
-      el: '#bgPickerBox',
-      apply: color => {
-        const hex = color.toHEXA().toString();
-        const showcase = document.getElementById('showcase');
-        if(showcase) showcase.style.backgroundColor = hex;
-      }
-    },
-    {
-    el: '#fontColorPickerBox',
-    apply: color => {
-    const hex = color.toHEXA().toString();
-
-    // プロフィール
-    const profileName = document.getElementById('profileName');
-    const profileBio = document.getElementById('profileBio');
-    if(profileName) profileName.style.setProperty('color', hex);
-    if(profileBio) profileBio.style.setProperty('color', hex);
-
-    // カード
-    document.querySelectorAll('.card-name, .card-price').forEach(el => {
-      el.style.setProperty('color', hex);
-    });
-
-    // フォロー/フォロワー表示（CSS変数を更新）
-    document.querySelectorAll('.profile-stats').forEach(el => {
-      el.style.setProperty('--font-color', hex);
-    });
-    }
-    },
-    {
-      el: '#announcementFontColorPickerBox',
-      apply: color => {
-        const hex = color.toHEXA().toString();
-        const bannerText = document.querySelector('#announcementBar .banner-text');
-        if (bannerText) bannerText.style.color = hex;
-      }
-    },
-    {
-      el: '#announcementBgPickerBox',
-      apply: color => {
-        const hex = color.toHEXA().toString();
-        const banner = document.getElementById('announcementBar');
-        if (banner) banner.style.backgroundColor = hex;
-      }
-    },
-    {
-  el: '#profileBgPickerBox',
-  apply: color => {
-    const hex = color.toHEXA().toString();
-    const profile = document.getElementById('profileSection');
-    if (profile) {
-      profile.style.setProperty('background-color', hex, 'important');
-      // 🔹 state → appState に変更
-      appState.profileBg = hex; 
-    }
-  }
-}
-  ];
-
-  pickrConfigs.forEach(cfg => {
-    const el = document.querySelector(cfg.el);
-    if (!el) return;
-
-    const pickr = Pickr.create({
-      el: el,
-      theme: 'nano',
-      default: '#ffffff',
-      position: 'top',
-      closeOnScroll: false,
-      appendTo: document.body,
-      components: {
-        preview: true,
-        opacity: true,
-        hue: true,
-        interaction: {
-          hex: true,
-          rgba: true,
-          input: true,
-          save: true
-        }
-      }
-    });
-
-    // 保存
-    pickr.on('save', color => {
-      cfg.apply(color);
-      pickr.hide();
-    });
-
-    // 👇 これを中に入れるのがポイント！！
-    pickr.on('show', () => {
-  const app = pickr.getRoot().app;
-  if (!app) return;
-
-  app.style.position = 'fixed';
-
-  const rect = app.getBoundingClientRect();
-
-  let top = rect.top;
-  let left = rect.left;
-
-  // 下にはみ出たら上へ
-  if (rect.bottom > window.innerHeight) {
-    top = window.innerHeight - rect.height - 8;
-  }
-
-  // 上にはみ出たら下へ
-  if (top < 8) {
-    top = 8;
-  }
-
-  // 左右も制御（←これ重要）
-  if (left < 8) left = 8;
-  if (left + rect.width > window.innerWidth) {
-    left = window.innerWidth - rect.width - 8;
-  }
-
-  app.style.top = `${top}px`;
-  app.style.left = `${left}px`;
-});
-
-  });
-}
+  
 
 
 // =========================
@@ -944,89 +771,7 @@ if (linkModal) {
   });
 }
   
-// =========================
-// カスタムバー編集開閉
-// =========================
-const editToggle = document.getElementById('editToggle');
-const editItems = document.getElementById('editItems');
 
-if (editToggle && editItems) {
-  editToggle.addEventListener('click', e => {
-    e.stopPropagation();
-
-    // ポップアップ閉じる
-    document.querySelectorAll('.popup').forEach(p => p.classList.remove('active'));
-
-    if (editItems.classList.contains('active')) {
-      editItems.classList.remove('active');
-      editItems.style.maxHeight = '0';
-    } else {
-      editItems.classList.add('active');
-      editItems.style.maxHeight = editItems.scrollHeight + 'px';
-    }
-  });
-}
-
-// 共通関数：ボタンの真上にポップアップ表示
-function showPopupAboveButton(popupEl, buttonEl) {
-  popupEl.style.visibility = 'hidden';
-  popupEl.classList.add('active');
-
-  const rect = buttonEl.getBoundingClientRect();
-  let top = rect.top - popupEl.offsetHeight - 8; // ボタンの上に8px余白
-  let left = rect.left + rect.width / 2 - popupEl.offsetWidth / 2;
-  
-  // 👇 これ追加（超重要）
-  if (top < 8) {
-    top = rect.bottom + 8; // 下に出す
-  }
-
-
-  // 画面端に収める
-  const minLeft = 8; // 左端の余白
-  const maxLeft = window.innerWidth - popupEl.offsetWidth - 8; // 右端の余白
-  if (left < minLeft) left = minLeft;
-  if (left > maxLeft) left = maxLeft;
-
-  popupEl.style.position = 'fixed';
-  popupEl.style.top = `${top}px`;
-  popupEl.style.left = `${left}px`;
-  popupEl.style.visibility = 'visible';
-}
-
-// ポップアップ開閉処理（テーマ・スタイル・アナウンス）
-const popups = {
-  themeButton: 'themePopup',
-  styleButton: 'stylePopup',
-  announcementButton: 'announcementPopup'
-};
-
-Object.keys(popups).forEach(btnId => {
-  const btn = document.getElementById(btnId);
-  const popup = document.getElementById(popups[btnId]);
-  if (!btn || !popup) return;
-
-  btn.addEventListener('click', e => {
-    e.stopPropagation();
-
-    // 他のポップアップを閉じる
-    document.querySelectorAll('.popup').forEach(p => {
-      if (p !== popup) p.classList.remove('active');
-    });
-
-    // 今クリックしたボタンの真上に表示
-    showPopupAboveButton(popup, btn);
-
-    // ❌ この部分を削除
-    // if (editItems.classList.contains('active')) {
-    //   editItems.classList.remove('active');
-    //   editItems.style.maxHeight = '0';
-    // }
-  });
-});
-
-// ※ 外クリックで閉じる処理は削除！
-// ショーケースや他の部分を触ってもポップアップは閉じない
 
 
   // アナウンスバー入力反映
@@ -1119,34 +864,9 @@ if (!document.body.classList.contains('theme-natural') &&
     openComments(currentCommentIndex);
   });
 
-  // =========================
-// 保存ボタンイベント
-// =========================
-const saveBtn = document.getElementById("saveBtn");
-if (saveBtn) {
-  saveBtn.addEventListener("click", () => {
-    saveAppState_FULL();
-  });
-}
-
-initPickr();  // カラーピッカーを初期化
 
 window.addEventListener('scroll', () => {
-  document.querySelectorAll('.popup.active').forEach(popup => {
-
-    // 👇 これ追加！！（Pickr開いてる時は何もしない）
-    if (document.querySelector('.pcr-app')) return;
-
-    const btnId = Object.keys(popups).find(key => popups[key] === popup.id);
-    if (!btnId) return;
-
-    const btn = document.getElementById(btnId);
-    if (!btn) return;
-    
-
-    showPopupAboveButton(popup, btn);
-  });
-});
+  
 
 
 });
