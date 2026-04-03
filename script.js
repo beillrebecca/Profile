@@ -148,7 +148,6 @@ function renderShowcaseLight() {
     }
   });
 
-  addBtn.addEventListener("click", () => {
   const newItem = {
     id: Date.now(),
     name: `アイテム${items.length + 1}`,
