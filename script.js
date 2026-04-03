@@ -119,31 +119,43 @@ function createCard(item, index) {
 // =========================
 // ショーケース描画
 // =========================
-function renderShowcase() {
+function renderShowcaseLight() {
   const showcase = document.getElementById("showcase");
   if (!showcase) return;
 
-  showcase.innerHTML = "";
+  showcase.innerHTML = ""; // リセット
 
-  items.forEach((item, index) => {
-    try {
-      const card = createCard(item, index);
-      showcase.appendChild(card);
+  // アイテムがある場合はカード描画
+  if (items.length > 0) {
+    items.forEach((item, index) => {
+      try {
+        const card = createCard(item, index);
+        showcase.appendChild(card);
 
-      const nameEl = card.querySelector(".card-name");
-      const priceEl = card.querySelector(".card-price");
+        const nameEl = card.querySelector(".card-name");
+        const priceEl = card.querySelector(".card-price");
 
-      if (nameEl && typeof item.fontColorName === "string") {
-        nameEl.style.color = item.fontColorName;
+        if (nameEl && typeof item.fontColorName === "string") {
+          nameEl.style.color = item.fontColorName;
+        }
+
+        if (priceEl && item.fontColorPrice) {
+          priceEl.style.color = item.fontColorPrice;
+        }
+
+      } catch (err) {
+        console.error("カード描画失敗", item, err);
       }
+    });
+  } else {
+    // アイテムが空ならメッセージ表示
+    const emptyMsg = document.createElement("div");
+    emptyMsg.className = "showcase-empty-msg";
+    emptyMsg.textContent = "まだアイテムはありません";
+    showcase.appendChild(emptyMsg);
+  }
 
-      if (priceEl && item.fontColorPrice) {
-        priceEl.style.color = item.fontColorPrice;
-      }
-    } catch (err) {
-      console.error("カード描画失敗", item, err);
-    }
-  });
+  // アイテム追加ボタンはプロフィールページでは不要 → 削除
 }
 
 // =========================
