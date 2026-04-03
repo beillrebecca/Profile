@@ -369,7 +369,7 @@ html, body{
 
 .card-actions {
   display: flex;
-  justify-content: center; /* 左寄せ → 中央寄せ */
+  justify-content: space-between; /* 均等に配置 */
   gap: 10px;               /* アイコン間の隙間を少し狭める */
   align-items: center;
   margin: 6px 0;           /* 上下に少し余白を追加 */
@@ -397,7 +397,7 @@ html, body{
   display: flex;
   align-items: center;
   gap: 6px;
-  width: 120px;      /* ← 固定 */
+  width: 100px;      /* ← 固定 */
   flex-shrink: 1;   /* ← これに変更 */
   min-width: 0;     /* ← 追加 */
 }
