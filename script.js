@@ -195,8 +195,8 @@ function initCardClicks() {
     });
     itemImgInput.dataset.init = 'true';
   }
-
-  // ショーケース内クリック処理
+  
+    // ショーケース内クリック処理
   showcaseEl.addEventListener("click", e => {
     if (e.target.closest('.pcr-app')) return;
 
@@ -424,10 +424,49 @@ document.addEventListener("DOMContentLoaded", () => {
   setupImageUpload(document.getElementById('headerImg'), document.getElementById('headerImgInput'));
   setupImageUpload(document.getElementById('avatarImg'), document.getElementById('avatarImgInput'));
 
+  // =====================
+  // 修正版 loadAppState
+  // =====================
+  function loadAppState() {
+    const saved = localStorage.getItem("recomenState");
+    if (!saved) return;
+
+    try {
+      const state = JSON.parse(saved);
+
+      // プロフィール系
+      if (state.headerImg) document.getElementById("headerImg").src = state.headerImg;
+      if (state.avatarImg) document.getElementById("avatarImg").src = state.avatarImg;
+      if (state.profileName) document.getElementById("profileName").textContent = state.profileName;
+      if (state.profileBio) document.getElementById("profileBio").textContent = state.profileBio;
+
+      // テーマ・フォント・背景
+      if (state.fontFamily) document.documentElement.style.setProperty('--font-family', state.fontFamily);
+      if (state.fontColor) document.getElementById("profileName").style.color = state.fontColor;
+      if (state.profileBg) document.getElementById("profileSection").style.backgroundColor = state.profileBg;
+      if (state.showcaseBg) document.getElementById("showcase").style.backgroundColor = state.showcaseBg;
+
+      // お知らせバー
+      if (state.announcementVisible) document.getElementById("announcementToggle").checked = true;
+      if (state.announcementText) document.querySelector('#announcementBar .banner-text').textContent = state.announcementText;
+      if (state.announcementBg) document.getElementById("announcementBar").style.backgroundColor = state.announcementBg;
+      if (state.announcementFontColor) document.querySelector('#announcementBar .banner-text').style.color = state.announcementFontColor;
+
+      // アイテム配列を復元
+      if (state.items && Array.isArray(state.items)) {
+        items = state.items;
+        renderShowcase();
+      }
+
+    } catch (err) {
+      console.error("ロードに失敗しました:", err);
+    }
+  }
+
   loadAppState();
   initCardClicks();
 
-  // コメントモーダル閉じる
+  // 以下コメントモーダル・コメント送信・コメントいいね・フォローモーダル初期化
   const commentModal = document.getElementById("commentModal");
   const commentClose = document.getElementById("commentClose");
   if (commentClose && commentModal) {
@@ -435,7 +474,6 @@ document.addEventListener("DOMContentLoaded", () => {
     commentModal.addEventListener("click", e => { if (e.target === commentModal) commentModal.style.display = "none"; });
   }
 
-  // コメント送信
   document.getElementById("commentSendBtn")?.addEventListener("click", () => {
     const input = document.getElementById("commentInput");
     const text = input.value.trim();
@@ -447,7 +485,6 @@ document.addEventListener("DOMContentLoaded", () => {
     openComments(currentCommentIndex);
   });
 
-  // コメントいいね
   document.getElementById("commentList")?.addEventListener("click", e => {
     const like = e.target.closest(".comment-like");
     if (!like || currentCommentIndex === null) return;
@@ -460,41 +497,4 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // フォロー/フォロワーモーダル
   initFollowModal();
-  
-  function loadAppState() {
-  const saved = localStorage.getItem("recomenState");
-  if (!saved) return;
-
-  try {
-    const state = JSON.parse(saved);
-
-    // プロフィール系
-    if (state.headerImg) document.getElementById("headerImg").src = state.headerImg;
-    if (state.avatarImg) document.getElementById("avatarImg").src = state.avatarImg;
-    if (state.profileName) document.getElementById("profileName").textContent = state.profileName;
-    if (state.profileBio) document.getElementById("profileBio").textContent = state.profileBio;
-
-    // テーマ・フォント・背景
-    if (state.fontFamily) document.documentElement.style.setProperty('--font-family', state.fontFamily);
-    if (state.fontColor) document.getElementById("profileName").style.color = state.fontColor;
-    if (state.profileBg) document.getElementById("profileSection").style.backgroundColor = state.profileBg;
-    if (state.showcaseBg) document.getElementById("showcase").style.backgroundColor = state.showcaseBg;
-
-    // お知らせバー
-    if (state.announcementVisible) document.getElementById("announcementToggle").checked = true;
-    if (state.announcementText) document.querySelector('#announcementBar .banner-text').textContent = state.announcementText;
-    if (state.announcementBg) document.getElementById("announcementBar").style.backgroundColor = state.announcementBg;
-    if (state.announcementFontColor) document.querySelector('#announcementBar .banner-text').style.color = state.announcementFontColor;
-
-    // アイテム配列を復元
-    if (state.items && Array.isArray(state.items)) {
-      items = state.items;
-      renderShowcase(); // 画面に描画
-    }
-
-  } catch (err) {
-    console.error("ロードに失敗しました:", err);
-  }
-}
 });
-
