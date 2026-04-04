@@ -163,25 +163,20 @@ function initCardClicks() {
   const itemImgInput = document.getElementById("itemImgInput");
   if (!itemImgInput) return;
 
-  // 画像アップロードイベントの初期化
+  // =========================
+  // 画像アップロード
+  // =========================
   if (!itemImgInput.dataset.init) {
     itemImgInput.addEventListener('change', event => {
       const file = event.target.files[0];
-      if (!file) return;
-
-      if (!activeCard) {
+      if (!file || !activeCard) {
         alert("画像を貼りたいカードを先にクリックしてください");
         itemImgInput.value = "";
         return;
       }
 
       const imgTag = activeCard.querySelector("img");
-      if (!imgTag) {
-        alert("カードに画像タグが見つかりません");
-        itemImgInput.value = "";
-        activeCard = null;
-        return;
-      }
+      if (!imgTag) return;
 
       const reader = new FileReader();
       reader.onload = ev => {
@@ -189,173 +184,118 @@ function initCardClicks() {
       };
       reader.readAsDataURL(file);
 
-      // リセット
       itemImgInput.value = "";
       activeCard = null;
     });
+
     itemImgInput.dataset.init = 'true';
   }
 
-  // ショーケース内クリック処理
+  // =========================
+  // クリック処理
+  // =========================
   showcaseEl.addEventListener("click", e => {
-    
+
     if (e.target.closest('.pcr-app')) return;
 
-    // 🖼 画像クリック
-    const imageEl = e.target.closest(".image");
-    if (imageEl) {
-      e.stopPropagation();
-      const card = imageEl.closest(".card");
-      if (!card) return; // 念のため null チェック
-      activeCard = card;
+    const card = e.target.closest(".card");
+    if (!card) return;
 
-      // input ファイル選択を発火
-      if (itemImgInput) itemImgInput.click();
+    const cards = Array.from(showcaseEl.querySelectorAll(".card"));
+    const index = cards.indexOf(card);
+    const item = items[index];
+
+    // 🖼 画像
+    if (e.target.closest(".image")) {
+      e.stopPropagation();
+      activeCard = card;
+      itemImgInput.click();
       return;
     }
 
+    // ❤️ いいね
+    if (e.target.closest(".icon-heart")) {
+      if (!item) return;
 
-  // ❤️ ハート
-  const heart = e.target.closest(".icon-heart");
-if (heart) {
-  const card = e.target.closest(".card");
+      item.liked = !item.liked;
+      item.likes = item.liked
+        ? (item.likes || 0) + 1
+        : Math.max((item.likes || 1) - 1, 0);
 
-  const showcaseEl = document.getElementById("showcase");
-  const cards = Array.from(showcaseEl.querySelectorAll(".card"));
-  const index = cards.indexOf(card);
-
-  if (!items[index]) return;
-
-  const item = items[index];
-
-  // トグル
-  item.liked = !item.liked;
-
-  // 数字処理
-  if (item.liked) {
-    item.likes = (item.likes || 0) + 1;
-  } else {
-    item.likes = Math.max((item.likes || 1) - 1, 0);
-  }
-
-  // 再描画（これが一番確実）
-  renderShowcaseLight();
-
-  return;
-}
-
-  // 💾 保存
-  const save = e.target.closest(".icon-save");
-  if (save) {
-    const path = save.querySelector("path");
-
-    save.classList.toggle("saved");
-
-    if (path) {
-      path.setAttribute("fill", save.classList.contains("saved") ? "#000" : "none");
+      renderShowcaseLight();
+      return;
     }
-    return;
-  }
-  
-  
-  // 🔗 シェア
-const share = e.target.closest(".icon-share");
-if (share) {
-  const card = e.target.closest(".card");
-  if (!card) return;
 
-  const linkEl = card.querySelector(".link-display");
-  const url = linkEl?.href;
+    // 💾 保存（見た目だけ）
+    if (e.target.closest(".icon-save")) {
+      const save = e.target.closest(".icon-save");
+      save.classList.toggle("saved");
+      return;
+    }
 
-  if (!url || url === "#") {
-    alert("リンクが設定されていません");
-    return;
-  }
+    // 🔗 シェア
+    if (e.target.closest(".icon-share")) {
+      const linkEl = card.querySelector(".link-display");
+      const url = linkEl?.href;
 
-  // 🔴 カード名取得
-  const name = card.querySelector(".card-name")?.textContent || "おすすめアイテム";
+      if (!url || url === "#") {
+        alert("リンクが設定されていません");
+        return;
+      }
 
-  // 🔴 ネイティブ共有
-  if (navigator.share) {
-    navigator.share({
-      title: name,
-      text: name,
-      url: url
-    }).catch(err => console.log("共有キャンセル", err));
-  } else {
-    // fallback（コピー）
-    navigator.clipboard.writeText(url);
-    alert("リンクをコピーしました！");
-  }
+      const name = card.querySelector(".card-name")?.textContent || "おすすめアイテム";
 
-  return;
-}
-  
-  // 💬 コメント
-const commentBtn = e.target.closest(".icon-comment");
-if (commentBtn) {
-  const card = e.target.closest(".card");
+      if (navigator.share) {
+        navigator.share({ title: name, text: name, url });
+      } else {
+        navigator.clipboard.writeText(url);
+        alert("リンクをコピーしました！");
+      }
+      return;
+    }
 
-  const showcaseEl = document.getElementById("showcase");
-  const cards = Array.from(showcaseEl.querySelectorAll(".card"));
-  const index = cards.indexOf(card);
+    // 💬 コメント
+    if (e.target.closest(".icon-comment")) {
+      currentCommentIndex = index;
+      openComments(index);
+      return;
+    }
 
-  currentCommentIndex = index;
+    // 💰 価格
+    if (e.target.closest(".card-price")) {
+      const priceEl = card.querySelector(".card-price");
+      const newPrice = prompt("価格を入力してね", priceEl.textContent);
+      if (newPrice !== null) priceEl.textContent = newPrice;
+      return;
+    }
 
-  openComments(index);
-  return;
-  }
+    // 🔗 リンククリック
+    if (e.target.closest(".link-display")) {
+      e.preventDefault();
 
-  // 💰 価格
-  const priceEl = e.target.closest(".card-price");
-  if (priceEl) {
-    const newPrice = prompt("価格を入力してね", priceEl.textContent);
-    if (newPrice !== null) priceEl.textContent = newPrice;
-    return;
-  }
-  
-  // 🔗 リンククリック（カウント＋遷移）
-const linkEl = e.target.closest(".link-display");
-if (linkEl) {
-  e.preventDefault();
+      const linkEl = card.querySelector(".link-display");
+      const clicksEl = card.querySelector(".modern-clicks");
 
-  const card = e.target.closest(".card");
-  if (!card) return;
+      let current = parseInt(clicksEl.textContent) || 0;
+      current++;
+      clicksEl.textContent = current;
 
-  // 🔴 クリック数取得＆更新
-  const clicksEl = card.querySelector(".modern-clicks");
-  let current = parseInt(clicksEl.textContent) || 0;
-  current++;
-  clicksEl.textContent = current;
+      if (item) item.clicks = current;
 
-  // 🔴 itemsにも反映
-  const showcaseEl = document.getElementById("showcase");
-  const cards = Array.from(showcaseEl.querySelectorAll(".card"));
-  const index = cards.indexOf(card);
-  if (items[index]) {
-    items[index].clicks = current;
-  }
+      const url = linkEl.href;
+      if (url && url !== "#") {
+        setTimeout(() => window.open(url, "_blank"), 150);
+      }
+      return;
+    }
 
-  // 🔴 リンクへ遷移
-  const url = linkEl.href;
-  if (url && url !== "#") {
-    setTimeout(() => {
-      window.open(url, "_blank");
-    }, 150);
-  }
+    // ✏️ 名前
+    if (e.target.closest(".card-name")) {
+      card.querySelector(".card-name").focus();
+      return;
+    }
 
-  return;
-  }
-
-
-  // ✏️ 名前
-  const nameEl = e.target.closest(".card-name");
-  if (nameEl) {
-    nameEl.focus();
-    return;
-  }
-
-});
+  });
 }
 
 // =========================
