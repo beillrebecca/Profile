@@ -142,4 +142,47 @@ document.addEventListener("DOMContentLoaded", () => {
   items = getDefaultItems();        // ← 強制初期化
   renderShowcaseProfile();          // ← 初期描画
   initCardClicks();
+  
+  // =========================
+// フォロー / フォロワーモーダル
+// =========================
+function initFollowModal() {
+  const followingBtn = document.getElementById('followingBtn');
+  const followersBtn = document.getElementById('followersBtn');
+  const followModal = document.getElementById('followModal');
+  const followerModal = document.getElementById('followerModal');
+
+  if (!followingBtn || !followModal) {
+    console.warn("フォローボタンまたはモーダルが見つからない");
+    return;
+  }
+
+  // フォロー
+  followingBtn.addEventListener('click', () => {
+    followModal.style.display = "flex";
+  });
+
+  // フォロワー
+  followersBtn?.addEventListener('click', () => {
+    followerModal.style.display = "flex";
+  });
+
+  // 閉じる処理
+  [followModal, followerModal].forEach(modal => {
+    if (!modal) return;
+
+    // 背景クリックで閉じる
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) modal.style.display = 'none';
+    });
+
+    // ×ボタン
+    const closeBtn = modal.querySelector('.close-btn');
+    closeBtn?.addEventListener('click', () => {
+      modal.style.display = 'none';
+    });
+  });
+}
+
+initFollowModal();
 });
