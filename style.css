@@ -565,3 +565,24 @@ html, body{
 .icon-save path {
   pointer-events: none;
 }
+
+/* =========================
+   フォーカス・選択時の紫枠を消す
+========================= */
+.card svg,
+.card-name[contenteditable="true"],
+.link-display,
+.menu-btn,
+.close-btn,
+input,
+button {
+  outline: none;
+  user-select: none;
+}
+
+.card-name[contenteditable="true"]::selection,
+.profile-name[contenteditable="true"]::selection,
+.profile-desc[contenteditable="true"]::selection {
+  background: transparent;
+  color: inherit;
+}
