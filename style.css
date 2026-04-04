@@ -529,7 +529,7 @@ html, body{
   display: flex;
   justify-content: center; /* ← 追加 */
   align-items: center;
-  gap: 2px;
+  gap: 0;
 }
 
 .like-count {
@@ -537,6 +537,7 @@ html, body{
   color: #666;
   min-width: 10px;
   text-align: left;
+  margin-left: 2px; /* ← 数字だけ少し離す */
 }
 
 @keyframes pop {
