@@ -391,48 +391,6 @@ function openComments(index) {
 }
 
 // =========================
-// ポップアップリンク編集（カードDOM版）
-// =========================
-function showLinkEditPopup(card) {
-  const popup = document.getElementById("linkModal"); // ←ここを修正
-  if (!popup) {
-    console.error("linkModal が存在しません");
-    return;
-  }
-
-  const input = document.getElementById("linkModalInput"); // input もID指定に変更
-  const btn = document.getElementById("linkModalSaveBtn"); // button もID指定
-
-  if (!input || !btn) {
-    console.error("popup 内の input または button が見つかりません");
-    return;
-  }
-
-  const linkDisplay = card.querySelector(".link-display");
-  input.value = linkDisplay ? linkDisplay.textContent : "";
-
-  popup.classList.add('active');
-  input.focus();
-
-  btn.onclick = () => {
-    let newLink = input.value.trim();
-    if (newLink && !newLink.startsWith("http")) newLink = "https://" + newLink;
-
-    if (linkDisplay) {
-      linkDisplay.textContent = newLink || "リンクを入力";
-      linkDisplay.href = newLink || "#"; 
-    }
-
-    const showcaseEl = document.getElementById("showcase");
-    const cards = Array.from(showcaseEl.querySelectorAll(".card"));
-    const index = cards.indexOf(card);
-    if (items[index]) items[index].link = newLink;
-
-    popup.classList.remove('active'); // 非表示
-  };
-}
-
-// =========================
 // 保存（アプリ全体）
 // =========================
 function saveAppState_FULL() {
