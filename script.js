@@ -140,6 +140,7 @@ function initCardClicks() {
       }
 
       renderShowcaseProfile();
+      initCardClicks();
       return;
     }
 
