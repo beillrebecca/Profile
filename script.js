@@ -883,9 +883,6 @@ if (commentModal) {
 }
 
 
-  const fontSelect = document.getElementById('fontSelect');
-  if (fontSelect) fontSelect.addEventListener('change', e => document.documentElement.style.setProperty('--font-family', e.target.value));
-
   setupImageUpload(document.getElementById('headerImg'), document.getElementById('headerImgInput'));
   setupImageUpload(document.getElementById('avatarImg'), document.getElementById('avatarImgInput'));
 
@@ -931,157 +928,10 @@ function initFollowModal() {
 
   initFollowModal();
 
-
-// =========================
-// リンク編集モーダル：背景クリックで閉じる
-// =========================
-const linkModal = document.getElementById("linkModal");
-if (linkModal) {
-  linkModal.addEventListener("click", e => {
-    if (e.target.id === "linkModal") {
-      linkModal.classList.remove("active");
-    }
-  });
-}
-  
-// =========================
-// カスタムバー編集開閉
-// =========================
-const editToggle = document.getElementById('editToggle');
-const editItems = document.getElementById('editItems');
-
-if (editToggle && editItems) {
-  editToggle.addEventListener('click', e => {
-    e.stopPropagation();
-
-    // ポップアップ閉じる
-    document.querySelectorAll('.popup').forEach(p => p.classList.remove('active'));
-
-    if (editItems.classList.contains('active')) {
-      editItems.classList.remove('active');
-      editItems.style.maxHeight = '0';
-    } else {
-      editItems.classList.add('active');
-      editItems.style.maxHeight = editItems.scrollHeight + 'px';
-    }
-  });
-}
-
-// 共通関数：ボタンの真上にポップアップ表示
-function showPopupAboveButton(popupEl, buttonEl) {
-  popupEl.style.visibility = 'hidden';
-  popupEl.classList.add('active');
-
-  const rect = buttonEl.getBoundingClientRect();
-  let top = rect.top - popupEl.offsetHeight - 8; // ボタンの上に8px余白
-  let left = rect.left + rect.width / 2 - popupEl.offsetWidth / 2;
-  
-  // 👇 これ追加（超重要）
-  if (top < 8) {
-    top = rect.bottom + 8; // 下に出す
-  }
-
-
-  // 画面端に収める
-  const minLeft = 8; // 左端の余白
-  const maxLeft = window.innerWidth - popupEl.offsetWidth - 8; // 右端の余白
-  if (left < minLeft) left = minLeft;
-  if (left > maxLeft) left = maxLeft;
-
-  popupEl.style.position = 'fixed';
-  popupEl.style.top = `${top}px`;
-  popupEl.style.left = `${left}px`;
-  popupEl.style.visibility = 'visible';
-}
-
-// ポップアップ開閉処理（テーマ・スタイル・アナウンス）
-const popups = {
-  themeButton: 'themePopup',
-  styleButton: 'stylePopup',
-  announcementButton: 'announcementPopup'
-};
-
-Object.keys(popups).forEach(btnId => {
-  const btn = document.getElementById(btnId);
-  const popup = document.getElementById(popups[btnId]);
-  if (!btn || !popup) return;
-
-  btn.addEventListener('click', e => {
-    e.stopPropagation();
-
-    // 他のポップアップを閉じる
-    document.querySelectorAll('.popup').forEach(p => {
-      if (p !== popup) p.classList.remove('active');
-    });
-
-    // 今クリックしたボタンの真上に表示
-    showPopupAboveButton(popup, btn);
-
-    // ❌ この部分を削除
-    // if (editItems.classList.contains('active')) {
-    //   editItems.classList.remove('active');
-    //   editItems.style.maxHeight = '0';
-    // }
-  });
-});
-
-// ※ 外クリックで閉じる処理は削除！
-// ショーケースや他の部分を触ってもポップアップは閉じない
-
-
-  // アナウンスバー入力反映
-const bannerInput = document.getElementById('bannerTextInput');
-const bannerSpan = document.querySelector('#announcementBar .banner-text');
-if (bannerInput && bannerSpan) {
-  const updateBannerAnimation = () => {
-    const bar = document.getElementById('announcementBar');
-    if (!bar) return;
-
-    const textWidth = bannerSpan.offsetWidth;
-    const barWidth = bar.offsetWidth;
-
-    const speed = 50; // px/秒
-    const duration = (barWidth + textWidth) / speed;
-
-    bannerSpan.style.animation = `bannerScroll ${duration}s linear infinite`;
-  };
-
-  // 初回アニメーション設定
-  updateBannerAnimation();
-
-  // テキスト更新時も再計算
-  bannerInput.addEventListener('input', e => {
-    bannerSpan.textContent = e.target.value;
-    // テキスト幅が変わったのでアニメーション再設定
-    updateBannerAnimation();
-  });
-}
-  
-  // =========================
-// テーマ切替
-// =========================
-document.querySelectorAll('input[name="theme"]').forEach(radio => {
-  radio.addEventListener('change', e => {
-    const theme = e.target.value;
-
-    // 一旦リセット
-    document.body.classList.remove('theme-natural', 'theme-modern');
-
-    // 適用
-    document.body.classList.add(`theme-${theme}`);
-  });
-});
-
-// 初期テーマ（まだ何も付いてない時だけ）
-if (!document.body.classList.contains('theme-natural') &&
-    !document.body.classList.contains('theme-modern')) {
-  document.body.classList.add('theme-natural');
-}
-
 // =========================
   // コメント送信
   // =========================
-  document.getElementById("commentSendBtn").addEventListener("click", () => {
+  document.getElementById("commentSendBtn")?.addEventListener("click", () => {
     const input = document.getElementById("commentInput");
     const text = input.value.trim();
     if (!text) return;
@@ -1102,11 +952,10 @@ if (!document.body.classList.contains('theme-natural') &&
     openComments(currentCommentIndex);
   });
 
-
   // =========================
   // コメントいいね
   // =========================
-  document.getElementById("commentList").addEventListener("click", e => {
+  document.getElementById("commentList")?.addEventListener("click", e => {
     const like = e.target.closest(".comment-like");
     if (!like) return;
 
@@ -1119,34 +968,5 @@ if (!document.body.classList.contains('theme-natural') &&
     openComments(currentCommentIndex);
   });
 
-  // =========================
-// 保存ボタンイベント
-// =========================
-const saveBtn = document.getElementById("saveBtn");
-if (saveBtn) {
-  saveBtn.addEventListener("click", () => {
-    saveAppState_FULL();
-  });
-}
-
-initPickr();  // カラーピッカーを初期化
-
-window.addEventListener('scroll', () => {
-  document.querySelectorAll('.popup.active').forEach(popup => {
-
-    // 👇 これ追加！！（Pickr開いてる時は何もしない）
-    if (document.querySelector('.pcr-app')) return;
-
-    const btnId = Object.keys(popups).find(key => popups[key] === popup.id);
-    if (!btnId) return;
-
-    const btn = document.getElementById(btnId);
-    if (!btn) return;
-    
-
-    showPopupAboveButton(popup, btn);
-  });
 });
 
-
-});
