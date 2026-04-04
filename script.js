@@ -117,21 +117,97 @@ function initCardClicks() {
 
   showcaseEl.addEventListener("click", e => {
 
+    const cards = Array.from(showcaseEl.querySelectorAll(".card"));
+    const card = e.target.closest(".card");
+    const index = cards.indexOf(card);
+    if (index === -1 || !items[index]) return;
+
+    const item = items[index];
+
+    // =========================
+    // ❤️ いいね
+    // =========================
     const heart = e.target.closest(".icon-heart");
     if (heart) {
-      const card = e.target.closest(".card");
-      const index = [...showcaseEl.children].indexOf(card);
-      items[index].liked = !items[index].liked;
+      item.liked = !item.liked;
+
+      if (item.liked) {
+        item.likes = (item.likes || 0) + 1;
+      } else {
+        item.likes = Math.max((item.likes || 1) - 1, 0);
+      }
+
       renderShowcaseProfile();
       return;
     }
 
+    // =========================
+    // 💬 コメント
+    // =========================
+    const comment = e.target.closest(".icon-comment");
+    if (comment) {
+      currentCommentIndex = index;
+
+      const modal = document.querySelector(".comment-modal");
+      if (modal) modal.style.display = "flex";
+
+      // edit-profileと同じ関数使うなら👇
+      if (typeof openComments === "function") {
+        openComments(index);
+      }
+
+      return;
+    }
+
+    // =========================
+    // 🔁 シェア
+    // =========================
+    const share = e.target.closest(".icon-share");
+    if (share) {
+      const linkEl = card.querySelector(".link-display");
+      const url = linkEl?.href;
+
+      if (!url || url === "#") {
+        alert("リンクが設定されていません");
+        return;
+      }
+
+      const name = card.querySelector(".card-name")?.textContent || "おすすめアイテム";
+
+      if (navigator.share) {
+        navigator.share({
+          title: name,
+          text: name,
+          url: url
+        }).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(url);
+        alert("リンクをコピーしました！");
+      }
+
+      return;
+    }
+
+    // =========================
+    // 🔖 保存
+    // =========================
+    const save = e.target.closest(".icon-save");
+    if (save) {
+      item.saved = !item.saved;
+      renderShowcaseProfile();
+      return;
+    }
+
+    // =========================
+    // 🔗 リンク
+    // =========================
     const linkEl = e.target.closest(".link-display");
     if (linkEl) {
       e.preventDefault();
       if (linkEl.href !== "#") window.open(linkEl.href, "_blank");
       return;
     }
+
   });
 }
 
