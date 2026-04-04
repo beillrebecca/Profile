@@ -591,6 +591,20 @@ html, body{
   pointer-events: none; /* ← これが超重要 */
 }
 
+/* アイコンの塗り */
+.icon-heart path {
+  fill: #ff4444; /* ハートは赤に */
+}
+
+.icon-save path {
+  fill: #4444ff; /* 保存は青に */
+}
+
+.icon-comment path,
+.icon-share path {
+  fill: #333333; /* コメント・シェアは濃いグレー */
+}
+
 /* =========================
    コメントモーダル
 ========================= */
