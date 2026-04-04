@@ -118,7 +118,7 @@ html, body{
 /* =========================
    メインコンテンツ
 ========================= */
-.main-content {
+.main-content-wrapper {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
