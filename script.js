@@ -216,8 +216,13 @@ document.addEventListener("DOMContentLoaded", () => {
   items = getDefaultItems();        // ← 強制初期化
   renderShowcaseProfile();          // ← 初期描画
   initCardClicks();
+  initFollowModal();
+});
   
   // =========================
+// フォロー / フォロワーモーダル
+// =========================
+// =========================
 // フォロー / フォロワーモーダル
 // =========================
 function initFollowModal() {
@@ -245,12 +250,10 @@ function initFollowModal() {
   [followModal, followerModal].forEach(modal => {
     if (!modal) return;
 
-    // 背景クリックで閉じる
     modal.addEventListener('click', (e) => {
       if (e.target === modal) modal.style.display = 'none';
     });
 
-    // ×ボタン
     const closeBtn = modal.querySelector('.close-btn');
     closeBtn?.addEventListener('click', () => {
       modal.style.display = 'none';
@@ -258,5 +261,3 @@ function initFollowModal() {
   });
 }
 
-initFollowModal();
-});
