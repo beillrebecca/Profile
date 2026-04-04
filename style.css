@@ -1,3 +1,7 @@
+/* * {
+  outline: 1px solid red;
+} */
+
 /* =========================
    フォント・カラー変数
 ========================= */
@@ -8,6 +12,7 @@
   --profile-bg:#fff;
   --showcase-bg:#f6f6f6;
   --card-bg:#ffffff;
+  
   --bottom-bar-height: 50px;
 }
 
@@ -49,7 +54,7 @@ body{
 .top-bar *,
 .bottom-bar,
 .bottom-bar * {
-  font-family: var(--font-family, 'Source Han Sans JP', sans-serif);
+  font-family:system-ui;
 }
 
 html, body{
@@ -115,7 +120,7 @@ html, body{
 }
 
 /* =========================
-   メイン
+   メインコンテンツ
 ========================= */
 .main-content {
   display: flex;
@@ -123,7 +128,6 @@ html, body{
   flex-wrap: wrap;
   max-width: 1400px;
   margin: 0 auto;
-  padding-top: 10px;
 }
 
 /* ===== プロフィール欄 ===== */
@@ -213,7 +217,7 @@ html, body{
   border-radius: 6px;
   box-sizing: border-box;
   font-size: 13px;
-  line-height: 1.4;
+  line-height: 1.4px;
 }
 
 .profile-info {
@@ -258,24 +262,24 @@ html, body{
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0,0,0,0.4);
-  display: none;
+  background: rgba(0,0,0,0.4); /* 半透明背景 */
+  display: none;               /* 初期は非表示 */
   justify-content: center;
   align-items: center;
-  z-index: 900;
+  z-index: 900; /* ボトムバーより下に設定 */
 }
 
 .modal-content {
   display: flex;
   flex-direction: column;
-  height: auto;
-  min-width: 300px;
-  max-height: 80vh;
-  background: #fff;
+  height: auto;          /* 100% → auto に変更 */
+  min-width: 300px;      /* 任意の幅 */
+  max-height: 80vh;      /* 高さ制限 */
+  background: #fff;      /* 背景色必須！ */
   border-radius: 8px;
-  overflow-y: auto;
+  overflow-y: auto;      /* 中身が多い場合スクロール */
   padding: 16px;
-  z-index: 1000;
+  z-index: 1000; /* ボトムバーと同じにして被らない */
 }
 
 .close-btn {
@@ -326,17 +330,10 @@ html, body{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 12px;
-  padding: 16px 16px 8px 16px;
+  padding: 16px 16px 8px 16px; /* 上16px / 右16px / 下8px / 左16px */
   justify-content: center;
   background: var(--showcase-bg);
   font-family: var(--font-family);
-}
-.showcase-empty-msg {
-  padding: 40px;
-  text-align: center;
-  color: #666;
-  font-size: 16px;
-  font-style: italic;
 }
 
 .slide-arrow{
@@ -353,7 +350,7 @@ html, body{
 .slide-right{right:4px;}
 
 .card-name{
-  min-height: 36px;
+  min-height: 36px;       /* 28px → 36px に拡大 */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -361,21 +358,16 @@ html, body{
   text-align: center;
   color: var(--font-color);
   margin: 0;
-  padding: 0 4px;
+  padding: 0 4px;         /* 左右に少し余白を追加して窮屈感を軽減 */
 }
 
 .card-actions {
   display: flex;
+  justify-content: center; /* 左寄せ → 中央寄せ */
+  gap: 10px;               /* アイコン間の隙間を少し狭める */
   align-items: center;
-  margin: 6px 0;
-  padding: 4px 0;
-  gap: 0;
-}
-.card-actions > * {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin: 6px 0;           /* 上下に少し余白を追加 */
+  padding: 4px 0;          /* 上下パディングでゆとりを調整 */
 }
 
 .price-link-wrapper{
@@ -384,7 +376,7 @@ html, body{
   justify-content:space-between;
   gap:8px;
   margin-top:8px;
-  min-width: 0;
+  min-width: 0; /* ← これが本質 */
 }
 
 .card-price{
@@ -392,16 +384,16 @@ html, body{
   font-weight:600;
   color: var(--font-color);
   white-space:nowrap;
-  flex-shrink: 0;
+  flex-shrink: 0; /* ← 値段は縮まない */
 }
 
 .link-wrapper {
   display: flex;
   align-items: center;
   gap: 6px;
-  width: 100px;
-  flex-shrink: 1;
-  min-width: 0;
+  width: 120px;      /* ← 固定 */
+  flex-shrink: 1;   /* ← これに変更 */
+  min-width: 0;     /* ← 追加 */
 }
 
 .link-display {
@@ -410,7 +402,7 @@ html, body{
   border: 1px solid #dcdcdc;
   border-radius: 6px;
   background: #fff;
-  color: #1a73e8;
+  color: #1a73e8; /* リンク風の青 */
   font-size: 12px;
   white-space: nowrap;
   overflow: hidden;
@@ -427,8 +419,10 @@ html, body{
   width: 100%;
   height: 100%;
   display: none;
+
   justify-content: center;
   align-items: center;
+
   background: rgba(0,0,0,0.3);
   z-index: 3000;
 }
@@ -444,6 +438,7 @@ html, body{
   padding: 16px;
   border-radius: 10px;
   width: 260px;
+
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -464,11 +459,25 @@ html, body{
   border-radius: 6px;
 }
 
+.edit-link-btn {
+  display: none;
+  padding: 4px 8px;
+  font-size: 12px;
+  border: 1px solid #dcdcdc;
+  border-radius: 6px;
+  background: #f5f5f5;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.edit-link-btn:hover {
+  background: #e0e0e0;
+}
+
 .card-name,
 .price-link-wrapper,
 .card-actions{
-  padding: 0;
-  margin: 0;
+  padding: 0; /* padding はカードの padding で統一するので削除 */
+  margin: 0;  /* 上下マージンもカード全体で調整 */
 }
 
 /* =========================
@@ -502,12 +511,15 @@ html, body{
   cursor: pointer;
   transition: transform 0.15s ease, fill 0.15s ease, stroke 0.15s ease;
 }
+
+/* いいね状態 */
 .icon-heart.liked {
-  fill: #ed4956;
+  fill: #ed4956;     /* インスタ風赤 */
   stroke: #ed4956;
   animation: likePop 0.25s ease;
 }
 
+/* アニメーション */
 @keyframes likePop {
   0%   { transform: scale(1); }
   40%  { transform: scale(1.35); }
@@ -516,24 +528,25 @@ html, body{
 }
 
 .like-wrapper {
-  position: relative;
-  width: 30px;
   display: flex;
-  justify-content: center;
   align-items: center;
-}
-.like-wrapper .icon-heart {
-  width: 30px;
-  height: 30px;
-}
-.like-count {
-  position: absolute;
-  bottom: -2px;
-  right: -6px;
-  font-size: 10px;
-  color: #555;
+  gap: 4px;
 }
 
+.like-count {
+  font-size: 11px;
+  color: #666;
+  min-width: 10px;
+  text-align: left;
+}
+
+@keyframes pop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
+}
+
+/* 保存状態 */
 .icon-save.saved{
   fill:#000;
   stroke:#000;
@@ -545,15 +558,17 @@ html, body{
   left: 8px;
   width: 18px;
   height: 18px;
-  stroke: rgba(0,0,0,0.3);
+  stroke: rgba(0,0,0,0.3); /* 薄グレー */
   cursor: pointer;
   z-index: 10;
   transition: 0.2s;
 }
+
 .icon-delete:hover {
   stroke: #ff4d4d;
   transform: scale(1.1);
 }
+
 .icon-delete:active {
   transform: scale(0.9);
 }
@@ -564,18 +579,13 @@ html, body{
 .icon-save {
   cursor: pointer;
 }
+
 .icon-heart path,
 .icon-comment path,
 .icon-share path,
 .icon-save path {
-  pointer-events: none;
+  pointer-events: none; /* ← これが超重要 */
 }
-
-/* アイコンの塗り */
-.icon-heart path { fill: #ff4444; }
-.icon-save path { fill: #4444ff; }
-.icon-comment path,
-.icon-share path { fill: #333333; }
 
 /* =========================
    コメントモーダル
@@ -589,6 +599,8 @@ html, body{
   align-items:flex-end;
   z-index:2000;
 }
+
+/* コメントボックス */
 .comment-box{
   width:100%;
   max-width:500px;
@@ -599,10 +611,12 @@ html, body{
   flex-direction:column;
   animation:commentSlideUp 0.25s ease;
 }
+
 @keyframes commentSlideUp{
   from{ transform:translateY(100%); }
   to{ transform:translateY(0); }
 }
+
 .comment-header{
   padding:14px;
   font-weight:bold;
@@ -611,24 +625,31 @@ html, body{
   justify-content:space-between;
   font-size:14px;
 }
+
 .comment-list{
-  will-change: scroll;
+  will-change: scroll; /* ブラウザにスクロール最適化させる */
   overflow-y:auto;
   padding:12px;
   font-size:13px;
   line-height:1.6;
 }
-.comment-list div{ margin-bottom:10px; }
+
+.comment-list div{
+  margin-bottom:10px;
+}
+
 .comment-input-area{
   display:flex;
   border-top:1px solid #eee;
 }
+
 .comment-input-area input{
   flex:1;
   border:none;
   padding:12px;
   font-size:14px;
 }
+
 .comment-input-area button{
   padding:12px 16px;
   border:none;
@@ -637,7 +658,11 @@ html, body{
   font-size:13px;
   cursor:pointer;
 }
-#commentClose{ cursor:pointer; font-size:16px; }
+
+#commentClose{
+  cursor:pointer;
+  font-size:16px;
+}
 
 .comment-like {
   display: inline-flex;
@@ -646,15 +671,22 @@ html, body{
   margin-left: 8px;
   cursor: pointer;
 }
+
 .comment-heart {
   width: 14px;
   height: 14px;
   stroke: #999;
   fill: none;
 }
+
 .comment-like.liked .comment-heart {
   stroke: #e0245e;
   fill: #e0245e;
+}
+
+.like-count {
+  font-size: 12px;
+  color: #555;
 }
 
 /* =========================
@@ -670,8 +702,8 @@ html, body{
   position:relative;
   box-shadow:0 2px 6px rgba(0,0,0,0.05);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
-  min-height: auto;
-  padding: 6px;
+  min-height: auto;     /* 必要最低限の高さに */
+  padding: 6px;        /* 内側の余白を少し減らす */
 }
 .card:hover{
   transform:translateY(-2px);
@@ -687,23 +719,23 @@ html, body{
 }
 .image{
   position: relative;
-  padding: 6px 6px 0;
+  padding: 6px 6px 0; /* 上下の余白を少し減らした */
 }
 .image img {
-  pointer-events: auto;
-  cursor: pointer;
+  pointer-events: auto; /* クリックできるように */
+  cursor: pointer;      /* ポインター表示 */
 }
 .card .modern-clicks{
-  position: absolute;
+  position: absolute;      /* 画像内での絶対位置 */
   top: 4px;
   right: 4px;
-  background: rgba(200,200,200,0.15);
-  color: rgba(255,255,255,0.8);
+  background: rgba(200,200,200,0.15); /* さらに薄いグレー */
+  color: rgba(255,255,255,0.8); /* 文字は薄い白 */
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 12px;
-  z-index: 10;
-  pointer-events: none;
+  z-index: 10;             /* 画像の上に確実に表示 */
+  pointer-events: none;    /* クリックは邪魔しない */
 }
 
 /* =========================
@@ -725,14 +757,248 @@ body.theme-modern .card {
   padding: 0;
   border-radius: 0;
 }
+
 body.theme-modern .card-actions {
   justify-content: space-evenly;
   padding: 0;
   margin: 8px 0 0 0;
 }
+
 body.theme-modern .card-actions svg {
   width: 26px;
   height: 26px;
+}
+
+/* =========================
+   カスタムバー（ボトム固定）
+========================= */
+.custom-bar-wrapper {
+  position: static;
+  bottom: 0; /* ボトムバーとぴったり */
+  left: 0;
+  width: 100%;
+  z-index: 1100; /* ボトムバーより前面 */
+  /* background: red; ← デバッグ用、不要なら削除 */
+}
+
+.custom-bar {
+  position: fixed;
+  bottom: var(--bottom-bar-height);
+  left: 0;
+  width: 100%;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #f3e8ff;
+  z-index: 1999;
+}
+
+/* 編集ボタン */
+.edit-toggle-btn {
+  display: block;
+  margin: 0 auto;
+  padding: 10px 28px;
+  font-size: 14px;
+  border: none;
+  border-radius: 999px;
+  background: #fff;
+  color: #000 !important;
+  cursor: pointer;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(203, 163, 232, 0.3);
+}
+
+.edit-toggle-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 18px rgba(203, 163, 232, 0.3);
+}
+
+/* 編集項目ボタン群（折りたたみ・スライド） */
+.edit-items {
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  width: 100%;
+  display: none; /* 折りたたみ時は非表示 */
+  justify-content: center; /* ← これ追加 */
+  gap: 10px;
+  z-index: 1200; /* カスタムバーより上 */
+  max-height: 0;
+  overflow: hidden;
+
+  pointer-events: none;
+}
+
+.edit-items.active {
+  display: flex;
+  max-height: 80px;
+  pointer-events: auto;
+  z-index: 1200;
+}
+
+/* これ追加👇（重要） */
+.edit-items.active .edit-item {
+  pointer-events: auto;
+}
+
+/* 各編集項目ボタン */
+.edit-item {
+  flex: 1; /* 均等幅 */
+  max-width: 120px; /* 適切な長さの上限 */
+  height: 40px;
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  white-space: nowrap;
+  transition: background 0.2s;
+  pointer-events: auto;
+}
+
+.edit-item:hover {
+  background: #45a049;
+}
+
+/* =========================
+   ポップアップ共通
+========================= */
+.popup {
+  position: absolute; /* 親は fixed なので画面基準 */
+  display: none;
+  width: 280px;
+  max-width: calc(100vw - 16px);
+  padding: 6px;
+  background: #e6f9d9;
+  border: 1px solid #c5e5b1;
+  border-radius: 6px;
+  font-size: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  pointer-events: auto;
+}
+
+/* 表示時 */
+.popup.active {
+  display: block;
+}
+
+/* 吹き出し矢印（枠） 下向きに変更 */
+.popup::before {
+  content: "";
+  position: absolute;
+  bottom: -9px;      /* top → bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 9px 9px 0 9px;   /* 上向きから下向きに */
+  border-style: solid;
+  border-color: #c5e5b1 transparent transparent transparent; /* 上が色 */
+}
+
+/* 吹き出し矢印（中身） 下向きに変更 */
+.popup::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;      /* top → bottom */
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 8px 8px 0 8px;   /* 上向きから下向きに */
+  border-style: solid;
+  border-color: #e6f9d9 transparent transparent transparent; /* 上が色 */
+}
+
+.popup-container {
+  position: fixed; /* relative → fixed に変更 */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%; /* 画面全体を覆う */
+  pointer-events: none; /* 背景クリックで閉じやすく */
+  z-index: 2000; /* カスタムバーより上 */
+}
+
+#themePopup {
+  width: 100px;
+}
+
+#stylePopup {
+  width: 180px;
+}
+
+#announcementPopup {
+  width: 200px;
+}
+
+.announcement-text-row,
+.announcement-fontcolor-row,
+.announcement-bg-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+}
+.announcement-text-row label,
+.announcement-fontcolor-row label,
+.announcement-bg-row label {
+  width: 100px; /* ラベル幅固定で揃える */
+}
+
+/* =========================
+   ショーケース内 追加ボタン
+========================= */
+.showcase-add-card-wrapper{
+  grid-column: 1 / -1;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 8px;
+}
+
+.showcase-add-card-btn{
+  background: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+}
+
+/* =========================
+   保存ボタン
+========================= */
+
+/* メインコンテンツ下に余白を確保 */
+.main-content-wrapper {
+  padding-bottom: 120px; /* 保存ボタン + カスタムバー + ボトムバー余白 */
+  box-sizing: border-box;
+}
+
+/* 保存ボタンをカード欄の下中央に揃える */
+.showcase-save-wrapper {
+  display: flex;
+  justify-content: center; /* 横中央 */
+  width: 100%; /* 必ず横幅いっぱいにする */
+  padding: 16px 0; /* 上下余白を十分確保 */
+  box-sizing: border-box;
+  z-index: 1150; /* カスタムバーより上 */
+}
+
+#saveBtn {
+  display: inline-block;
+  background: #d9f1ff;
+  color: #000;
+  border: none;
+  border-radius: 8px;
+  padding: 12px 28px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  font-size: 16px;
+}
+
+#saveBtn:hover {
+  background: #c7e9ff;
 }
 
 /* =========================
@@ -812,9 +1078,6 @@ body.dark-mode .icon-save.saved{
   stroke:#eee;
 }
 
-/* =========================
-   お知らせバナー
-========================= */
 #announcementBar {
   position: fixed;
   top: 70px;
@@ -828,15 +1091,102 @@ body.dark-mode .icon-save.saved{
   align-items: center;
   z-index: 1100;
 }
+
 .banner-text {
   position: absolute;
   white-space: nowrap;
   top: 50%;
   transform: translateY(-50%);
-  left: 100%;
+  left: 100%; /* 右端外からスタート */
   animation: bannerScroll 10s linear infinite;
 }
+
 @keyframes bannerScroll {
-  0% { left: 100%; }
-  100% { left: -100%; }
+  0% {
+    left: 100%; /* 右端外 */
+  }
+  100% {
+    left: -100%; /* 左端外 */
+  }
+}
+
+/* =========================
+   ログインページ
+========================= */
+.login-container{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  height:100vh;
+}
+
+.login-box{
+  width:320px;
+  padding:40px 30px;
+  background:#fff;
+  border:1px solid #ddd;
+  text-align:center;
+}
+
+.login-logo{
+  font-family:'Galada', cursive;
+  font-size:42px;
+  margin-bottom:30px;
+}
+
+.login-box input{
+  width:100%;
+  padding:10px;
+  margin-bottom:10px;
+  border:1px solid #ccc;
+  border-radius:6px;
+}
+
+#loginBtn{
+  width:100%;
+  padding:10px;
+  background:#0095f6;
+  color:#fff;
+  border:none;
+  border-radius:6px;
+  margin-top:10px;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.divider{
+  margin:20px 0;
+  font-size:12px;
+  color:#999;
+}
+
+#guestBtn{
+  width:100%;
+  padding:10px;
+  background:#eee;
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+}
+
+.signup-link{
+  margin-top:20px;
+  font-size:12px;
+}
+
+.signup-link span{
+  color:#0095f6;
+  cursor:pointer;
+}
+
+/* 新規登録ページに飛ぶ専用リンク */
+#goSignup {
+  color: #007bff;       /* 青色にしてリンク感 */
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 15px;
+  text-align: center;
+  display: block;       /* 中央揃えにしやすくする */
+  font-weight: 500;
 }
