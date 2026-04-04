@@ -148,17 +148,16 @@ function initCardClicks() {
     // =========================
     const comment = e.target.closest(".icon-comment");
     if (comment) {
-      currentCommentIndex = index;
+    currentCommentIndex = index;
 
-      const modal = document.getElementById("commentModal");
-      if (modal) modal.style.display = "flex";
+    // モーダル表示
+    const modal = document.getElementById("commentModal");
+    if (modal) modal.style.display = "flex";
 
-      // edit-profileと同じ関数使うなら👇
-      if (typeof openComments === "function") {
-        openComments(index);
-      }
+    // コメント表示
+    openComments(index);
 
-      return;
+    return;
     }
 
     // =========================
