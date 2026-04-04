@@ -12,9 +12,6 @@
 <!-- アイコン -->
 <script src="https://unpkg.com/lucide@latest"></script>
 
-<!-- カラーピッカー -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/themes/nano.min.css">
-<script src="https://cdn.jsdelivr.net/npm/@simonwep/pickr/dist/pickr.min.js"></script>
 
 <!-- カスタムスタイル -->
 <link rel="stylesheet" href="style.css">
@@ -72,28 +69,13 @@
 </div> <!-- ← これ追加！！！！ -->
 
 
-<!-- ===== 保存ボタン（ショーケース外・中央） ===== -->
-<div class="showcase-save-wrapper">
-  <button id="saveBtn" class="save-btn">保存</button>
-</div>
+
 
 
   <!-- ===== カスタムバー（ボトム固定） ===== -->
 <div class="custom-bar-wrapper">
   <div class="custom-bar">
 
-    <!-- ショーケース編集トグル -->
-    <button id="editToggle" class="edit-toggle-btn">ショーケースを編集</button>
-
-    <!-- 編集項目ボタン群（初期は折りたたまれて隠れる） -->
-    <div class="edit-items" id="editItems">
-      <button class="edit-item" id="themeButton">テーマ</button>
-      <button class="edit-item" id="styleButton">スタイル</button>
-      <button class="edit-item" id="announcementButton">アナウンスバー</button>
-    </div>
-
-  </div> <!-- /.custom-bar -->
-</div> <!-- /.custom-bar-wrapper -->
 
 <!-- ===== ボトムメニュー ===== -->
 <div class="bottom-bar">
@@ -132,89 +114,7 @@
   </button>
 </div>
 
-<!-- ===== ポップアップ ===== -->
-<div class="popup" id="themePopup">
-  <label class="theme-option">
-    <input type="radio" name="theme" value="natural" checked>
-    <span class="label-text">ナチュラル</span>
-  </label>
-  <label class="theme-option">
-    <input type="radio" name="theme" value="modern">
-    <span class="label-text">モダン</span>
-  </label>
-</div>
-<div class="popup" id="stylePopup">
-  <label class="color-field">
-    <span class="label">Background</span>
-    <div class="color-picker-box" id="bgPickerBox"></div>
-  </label>
 
-  <label>
-    <span class="label">Font</span>
-    <select id="fontSelect">
-      <option value="'Source Han Sans JP', sans-serif">Source Han Sans JP</option>
-      <option value="'IPAex Mincho', serif">IPAex Mincho</option>
-      <option value="'Sawarabi Gothic', sans-serif">Sawarabi Gothic</option>
-    </select>
-  </label>
-
-  <label class="color-field">
-    <span class="label">Font Color</span>
-    <div class="color-picker-box" id="fontColorPickerBox"></div>
-  </label>
-
-  <label class="color-field">
-    <span class="label">Profile Background</span>
-    <div class="color-picker-box" id="profileBgPickerBox"></div>
-  </label>
-</div>
-
-<div class="popup" id="announcementPopup">
-  <!-- Show Announcement チェックボックス -->
-  <label class="toggle-field">
-    <input type="checkbox" id="announcementToggle" checked>
-    <span class="label">Show Announcement</span>
-  </label>
-
-  <!-- Text 入力 横並び -->
-  <div class="announcement-text-row">
-    <label for="bannerTextInput">Text</label>
-    <input type="text" id="bannerTextInput" placeholder="アナウンスバーのテキスト" value="アナウンスバーのテキスト">
-  </div>
-
-  <!-- フォントカラー 横並び -->
-  <div class="announcement-fontcolor-row">
-    <label for="announcementFontColorPickerBox">Fonts Color</label>
-    <div class="color-picker-box" id="announcementFontColorPickerBox"></div>
-  </div>
-
-  <!-- Background 横並び -->
-  <div class="announcement-bg-row">
-    <label for="announcementBgPickerBox">Background</label>
-    <div class="color-picker-box" id="announcementBgPickerBox"></div>
-  </div>
-</div>
-
-
-
-   <!-- カードリンク編集モーダル -->
-<div class="link-modal" id="linkModal">
-  <div class="link-modal-content">
-    <input type="text" id="linkModalInput" placeholder="リンクを入力">
-    <button id="linkModalSaveBtn">決定</button>
-  </div>
-</div>
-
-<!-- ===== モーダル（編集系・共通） ===== -->
-<div class="modal" id="editModal">
-  <div class="modal-content">
-    <button class="close-btn">×</button>
-    <div class="modal-title">編集モード</div>
-    <div class="modal-body">
-      <!-- 編集内容が入る -->
-    </div>
-  </div>
-</div>
 
   <!-- ===== モーダル（フォロー用） ===== -->
   <div class="modal" id="followModal">
