@@ -361,6 +361,14 @@ function setupImageUpload(imgEl, inputEl) {
 // =========================
 document.addEventListener("DOMContentLoaded", () => {
   console.log("JS読み込まれた");
+
+  renderShowcaseLight(); // ←🔥 これ追加（最重要）
+
+  setupImageUpload(document.getElementById('headerImg'), document.getElementById('headerImgInput'));
+  setupImageUpload(document.getElementById('avatarImg'), document.getElementById('avatarImgInput'));
+
+  initCardClicks();
+});
   
 
 
@@ -386,11 +394,6 @@ if (commentModal) {
 }
 
 
-  setupImageUpload(document.getElementById('headerImg'), document.getElementById('headerImgInput'));
-  setupImageUpload(document.getElementById('avatarImg'), document.getElementById('avatarImgInput'));
-
-
-  initCardClicks();
   
   // =========================
 // フォロー / フォロワーモーダル制御
