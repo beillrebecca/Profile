@@ -477,7 +477,6 @@ html, body{
 .card-actions{
   padding: 0; /* padding はカードの padding で統一するので削除 */
   margin: 0;  /* 上下マージンもカード全体で調整 */
-  min-width: 0;
 }
 
 /* =========================
@@ -635,7 +634,7 @@ html, body{
 }
 
 .comment-list{
-  will-change: transform;; /* ブラウザにスクロール最適化させる */
+  will-change: transform; /* ブラウザにスクロール最適化させる */
   overflow-y:auto;
   padding:12px;
   font-size:13px;
