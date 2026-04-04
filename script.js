@@ -1,3 +1,10 @@
+window.addEventListener("error", function(e) {
+  console.log("JS エラー:", e.message, e.filename, e.lineno);
+  // alert は開発中だけにする
+  // alert("エラー発生: " + e.message + " 行:" + e.lineno);
+});
+
+
 // =========================
 // JS の最後にエラーハンドリング
 // =========================
@@ -115,12 +122,15 @@ function initCardClicks() {
   const showcaseEl = document.getElementById("showcase");
   if (!showcaseEl) return;
 
-  showcaseEl.addEventListener("click", e => {
+  // 既存イベントを削除して安全に置き換え
+  const newEl = showcaseEl.cloneNode(true);
+  showcaseEl.parentNode.replaceChild(newEl, showcaseEl);
 
-    const cards = Array.from(showcaseEl.querySelectorAll(".card"));
+  newEl.addEventListener("click", e => {
     const card = e.target.closest(".card");
-    if (!card) return; // ← これを追加
+    if (!card) return;
 
+    const cards = Array.from(newEl.querySelectorAll(".card"));
     const index = cards.indexOf(card);
     if (index === -1 || !items[index]) return;
 
@@ -132,13 +142,18 @@ function initCardClicks() {
     const heart = e.target.closest(".icon-heart");
     if (heart) {
       item.liked = !item.liked;
+      item.likes = item.liked ? (item.likes || 0) + 1 : Math.max((item.likes || 1) - 1, 0);
+      renderShowcaseProfile();
+      initCardClicks(); // 再初期化
+      return;
+    }
 
-      if (item.liked) {
-        item.likes = (item.likes || 0) + 1;
-      } else {
-        item.likes = Math.max((item.likes || 1) - 1, 0);
-      }
-
+    // =========================
+    // 🔖 保存
+    // =========================
+    const save = e.target.closest(".icon-save");
+    if (save) {
+      item.saved = !item.saved;
       renderShowcaseProfile();
       initCardClicks();
       return;
@@ -149,12 +164,10 @@ function initCardClicks() {
     // =========================
     const comment = e.target.closest(".icon-comment");
     if (comment) {
-    currentCommentIndex = index;
-
-    const modal = document.getElementById("commentModal");
-    if (modal) modal.style.display = "flex";
-
-    return;
+      currentCommentIndex = index;
+      const modal = document.getElementById("commentModal");
+      if (modal) modal.style.display = "flex";
+      return;
     }
 
     // =========================
@@ -187,17 +200,7 @@ function initCardClicks() {
     }
 
     // =========================
-    // 🔖 保存
-    // =========================
-    const save = e.target.closest(".icon-save");
-    if (save) {
-      item.saved = !item.saved;
-      renderShowcaseProfile();
-      return;
-    }
-
-    // =========================
-    // 🔗 リンク
+    // 🔗 リンククリック
     // =========================
     const linkEl = e.target.closest(".link-display");
     if (linkEl) {
@@ -205,7 +208,6 @@ function initCardClicks() {
       if (linkEl.href !== "#") window.open(linkEl.href, "_blank");
       return;
     }
-
   });
 }
 
