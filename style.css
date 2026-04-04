@@ -372,6 +372,7 @@ html, body{
   align-items: center;
   margin: 6px 0;
   padding: 4px 0;
+  gap: 0;
 }
 
 .card-actions > * {
@@ -529,7 +530,8 @@ html, body{
   display: flex;
   justify-content: center; /* ← 追加 */
   align-items: center;
-  gap: 0;
+  gap: 2px;
+  width: 30px;
 }
 
 .like-count {
