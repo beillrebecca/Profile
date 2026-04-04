@@ -449,7 +449,7 @@ if (commentModal) {
   setupImageUpload(document.getElementById('headerImg'), document.getElementById('headerImgInput'));
   setupImageUpload(document.getElementById('avatarImg'), document.getElementById('avatarImgInput'));
 
-  loadAppState();
+
   initCardClicks();
   
   // =========================
