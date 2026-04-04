@@ -136,11 +136,11 @@ function renderShowcaseLight() {
       const priceEl = card.querySelector(".card-price");
 
       if (nameEl && typeof item.fontColorName === "string") {
-      nameEl.style.color = item.fontColorName;
+        nameEl.style.color = item.fontColorName;
       }
 
       if (priceEl && item.fontColorPrice) {
-      priceEl.style.color = item.fontColorPrice;
+        priceEl.style.color = item.fontColorPrice;
       }
 
     } catch (err) {
@@ -148,40 +148,7 @@ function renderShowcaseLight() {
     }
   });
 
-  // 🔹 「新しいアイテム追加」ボタン
-  const addWrapper = document.createElement("div");
-  addWrapper.className = "showcase-add-card-wrapper";
-
-  const addBtn = document.createElement("button");
-  addBtn.id = "addCardBtn";
-  addBtn.className = "showcase-add-card-btn";
-  addBtn.textContent = "＋ 新しいアイテムを追加";
-
-  addWrapper.appendChild(addBtn);
-  showcase.appendChild(addWrapper);
-
-  addBtn.addEventListener("click", () => {
-  const newItem = {
-    id: Date.now(),
-    name: `アイテム${items.length + 1}`,
-    price: "¥0",
-    link: "",
-    img: "",
-    liked: false,
-    saved: false,
-    clicks: 0,
-    fontColorName: "#000",
-    fontColorPrice: "#000",
-    comments: [],
-    likes: 0
-  };
-
-  items.push(newItem);
-
-  // 🔥 ここが超重要
-  renderShowcaseLight();
-});
-
+  // 🔹 「新しいアイテム追加」関連コードは削除
 }
 
 // =========================
