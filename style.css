@@ -40,12 +40,7 @@ body{
   color:var(--font-color);
 }
 
-.custom-bar,
-.custom-bar *,
-.edit-items,
-.edit-items *,
-.popup,
-.popup *,
+
 .top-bar,
 .top-bar *,
 .bottom-bar,
@@ -213,7 +208,7 @@ html, body{
   border-radius: 6px;
   box-sizing: border-box;
   font-size: 13px;
-  line-height: 1.4px;
+  line-height: 1.4;
 }
 
 .profile-info {
