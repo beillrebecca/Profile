@@ -119,6 +119,8 @@ function initCardClicks() {
 
     const cards = Array.from(showcaseEl.querySelectorAll(".card"));
     const card = e.target.closest(".card");
+    if (!card) return; // ← これを追加
+
     const index = cards.indexOf(card);
     if (index === -1 || !items[index]) return;
 
