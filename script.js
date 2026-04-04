@@ -150,7 +150,7 @@ function initCardClicks() {
     if (comment) {
       currentCommentIndex = index;
 
-      const modal = document.querySelector(".comment-modal");
+      const modal = document.getElementById("commentModal");
       if (modal) modal.style.display = "flex";
 
       // edit-profileと同じ関数使うなら👇
