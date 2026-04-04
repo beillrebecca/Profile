@@ -790,49 +790,7 @@ body.theme-modern .card-actions svg {
   height:24px;
 }
 
-/* =========================
-   レスポンシブ
-========================= */
-@media(max-width:768px){
-  .custom-bar,
-  .bottom-bar{
-    height:50px;
-  }
-  .custom-bar button,
-  .bottom-bar button{
-    font-size:11px;
-  }
-  .card-name{
-    font-size:12px;
-  }
-}
 
-/* =========================
-   テーマ切替
-========================= */
-body.dark-mode{
-  --bg-color:#1a1a1a;
-  --font-color:#eee;
-  --profile-bg:#222;
-  --showcase-bg:#111;
-  --card-bg:#2a2a2a;
-}
-body.dark-mode .top-bar,
-body.dark-mode .bottom-bar,
-body.dark-mode .custom-bar{
-  background:#222;
-}
-body.dark-mode .card-actions svg{
-  stroke:#eee;
-}
-body.dark-mode .icon-heart.liked{
-  fill:red;
-  stroke:red;
-}
-body.dark-mode .icon-save.saved{
-  fill:#eee;
-  stroke:#eee;
-}
 
 #announcementBar {
   position: fixed;
