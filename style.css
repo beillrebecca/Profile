@@ -1,7 +1,3 @@
-/* * {
-  outline: 1px solid red;
-} */
-
 /* =========================
    フォント・カラー変数
 ========================= */
@@ -12,11 +8,10 @@
   --profile-bg:#fff;
   --showcase-bg:#f6f6f6;
   --card-bg:#ffffff;
-  
   --bottom-bar-height: 50px;
 }
 
-/* ★修正：フォントフォールバックの書き方を安全化 */
+/* フォント */
 .profile,
 .profile *,
 .showcase, 
@@ -39,26 +34,11 @@
 ========================= */
 body{
   margin:0;
-  padding-top:0;
   padding-bottom:120px;
   background:#ffffff;
   color:var(--font-color);
 }
 
-.custom-bar,
-.custom-bar *,
-.edit-items,
-.edit-items *,
-.popup,
-.popup *,
-.top-bar,
-.top-bar *,
-.bottom-bar,
-.bottom-bar * {
-  font-family:system-ui;
-}
-
-/* ★修正：iOS対策（overflow-xだけに限定） */
 html, body{
   overflow-x:hidden;
 }
@@ -74,9 +54,8 @@ html, body{
   height:70px;
   background:#ffffff;
   z-index:1000;
-  box-shadow:none;
 }
-  
+
 .logo{
   position:absolute;
   left:50%;
@@ -84,9 +63,8 @@ html, body{
   transform:translate(-50%,-50%);
   font-family:'Galada', cursive;
   font-size:35px;
-  color: #000000;
 }
-  
+
 .hamburger{
   position:absolute;
   right:16px;
@@ -99,11 +77,10 @@ html, body{
   justify-content:space-between;
   cursor:pointer;
 }
+
 .hamburger span{
-  display:block;
   height:3px;
   background:#000;
-  border-radius:2px;
 }
 
 /* =========================
@@ -111,10 +88,9 @@ html, body{
 ========================= */
 .header{
   height:260px;
-  cursor:pointer;
   margin-top:70px;
-  margin-bottom:0;
 }
+
 .header img{
   width:100%;
   height:100%;
@@ -122,9 +98,9 @@ html, body{
 }
 
 /* =========================
-   メインコンテンツ
+   メイン（★ここ修正）
 ========================= */
-.main-content {
+.main-content-wrapper {
   display: flex;
   gap: 16px;
   flex-wrap: wrap;
@@ -132,196 +108,47 @@ html, body{
   margin: 0 auto;
 }
 
-/* ===== プロフィール欄 ===== */
+/* =========================
+   プロフィール
+========================= */
 .profile {
   flex: 1;
   display: flex;
-  gap: 16px;
   flex-direction: column;
+  gap: 16px;
   padding: 16px;
   background: var(--profile-bg);
-  align-items: flex-start;
   max-width: 700px;
 }
 
-@media (max-width: 768px) {
-  .main-content {
-    display: flex;
-    gap: 16px;
-    margin: 0;
-    margin-top: 0;
-  }
-
-  .profile, .showcase {
-    flex: 1 1 100%;
-  }
-}
-
-.avatar-container{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:4px;
-  margin-top:12px;
-}
-.avatar {
-  width: 80px;
-  height: 80px;
-  border-radius: 50%;
-  overflow: hidden;
-  cursor: pointer;
-  border: 0.5px solid #333;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #d8ebfa;
-}
-.avatar img{
-  width: 100%;
-  height: 100%;
-  filter: none;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-/* 上段 */
 .profile-top {
   display: flex;
-  align-items: flex-start;
   gap: 12px;
-  margin-top: 12px;
 }
 
-/* 下段 */
 .profile-bottom {
   display: flex;
-  flex-direction: row;
   width: 100%;
-  margin-top: 12px;
 }
 
-/* ★修正：margin重複解消（後勝ちバグ防止） */
 .profile-name {
-  flex: 0 0 auto;
-  font-weight: 400;
   font-size: 16px;
-  min-width: auto;
-  text-align: left;
   margin: 0;
 }
 
 .profile-desc {
-  flex: 1;
-  min-height: 120px;
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
-  border-radius: 6px;
-  box-sizing: border-box;
-  font-size: 13px;
-  line-height: 1.4;
 }
 
-.profile-info {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-  margin-top: 8px;
-  margin-left: 12px;
-}
-
-/* フォロー/フォロワー横並び */
 .profile-stats {
-  display: flex;
-  flex-direction: row;
-  gap: 12px;
-  align-items: center;
-  margin: 0;
-  flex: 0 0 auto;
-  color: var(--font-color, #555);
+  display:flex;
+  gap:12px;
 }
 
 .stat-item {
-  cursor: pointer;
-  font-size: 13px;
-  color: #555;
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
-
-.stat-item strong {
-  font-weight: bold;
-}
-
-/* =========================
-   モーダル
-========================= */
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.4);
-  display: none;
-  justify-content: center;
-  align-items: center;
-  z-index: 900;
-}
-
-.modal-content {
-  display: flex;
-  flex-direction: column;
-  height: auto;
-  min-width: 300px;
-  max-height: 80vh;
-  background: #fff;
-  border-radius: 8px;
-  overflow-y: auto;
-  padding: 16px;
-  z-index: 1000;
-}
-
-.close-btn {
-  align-self: flex-end;
-  background: none;
-  border: none;
-  font-size: 20px;
-  cursor: pointer;
-  margin: 8px;
-}
-
-.modal-title {
-  text-align: center;
-  font-weight: bold;
-  padding: 8px 0;
-  border-bottom: 1px solid #eee;
-}
-
-.user-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  overflow-y: auto;
-  flex: 1;
-}
-
-.user-list li {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px 12px;
-  border-bottom: 1px solid #eee;
-  cursor: default;
-}
-
-.user-list li img {
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
+  cursor:pointer;
 }
 
 /* =========================
@@ -332,80 +159,97 @@ html, body{
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 12px;
-  padding: 16px 16px 8px 16px;
-  justify-content: center;
+  padding: 16px;
   background: var(--showcase-bg);
-  font-family: var(--font-family, Arial), sans-serif;
 }
 
+/* =========================
+   カード
+========================= */
+.card{
+  background:var(--card-bg);
+  border-radius:12px;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  position:relative;
+  box-shadow:0 2px 6px rgba(0,0,0,0.05);
+  transition:0.2s;
+  padding:6px;
+}
+
+.card:hover{
+  transform:translateY(-2px);
+}
+
+/* 画像 */
+.image{
+  position:relative;
+}
+
+.image img{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+/* クリック数 */
+.modern-clicks{
+  position:absolute;
+  top:4px;
+  right:4px;
+  font-size:12px;
+  background:rgba(0,0,0,0.3);
+  color:#fff;
+  padding:2px 6px;
+  border-radius:4px;
+  pointer-events:none;
+}
+
+/* 名前 */
 .card-name{
-  min-height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  text-align: center;
-  color: var(--font-color);
-  margin: 0;
-  padding: 0 4px;
+  font-size:14px;
+  text-align:center;
+  margin-top:6px;
 }
 
-.card-actions {
-  display: flex;
-  align-items: center;
-  margin: 6px 0;
-  padding: 4px 0;
-  gap: 0;
-}
-
-.card-actions > * {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
+/* 価格＆リンク */
 .price-link-wrapper{
   display:flex;
-  align-items:center;
   justify-content:space-between;
-  gap:8px;
-  margin-top:8px;
-  min-width: 0;
+  align-items:center;
+  gap:6px;
+  margin-top:6px;
 }
 
 .card-price{
   font-size:14px;
   font-weight:600;
-  color: var(--font-color);
+}
+
+.link-wrapper{
+  width:100px;
+}
+
+.link-display{
+  display:block;
+  font-size:12px;
+  padding:4px;
+  border:1px solid #ccc;
+  border-radius:4px;
+  overflow:hidden;
   white-space:nowrap;
-  flex-shrink: 0;
+  text-overflow:ellipsis;
 }
 
-.link-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  width: 100px;
-  flex-shrink: 1;
-  min-width: 0;
+/* アクション */
+.card-actions{
+  display:flex;
+  justify-content:space-around;
+  margin-top:6px;
 }
-
-.link-display {
-  flex: 1;
-  padding: 6px 8px;
-  border: 1px solid #dcdcdc;
-  border-radius: 6px;
-  background: #fff;
-  color: #1a73e8;
-  font-size: 12px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  cursor: pointer;
-  min-width: 0;
-}
-
 
 /* =========================
    コメントモーダル
@@ -428,63 +272,23 @@ html, body{
   border-radius:16px 16px 0 0;
   display:flex;
   flex-direction:column;
-  animation:commentSlideUp 0.25s ease;
 }
 
-.comment-header{
-  padding:14px;
-  font-weight:bold;
-  border-bottom:1px solid #eee;
-  display:flex;
-  justify-content:space-between;
-  font-size:14px;
-}
-
-/* ★修正：scroll最適化はtransformでOK（維持） */
 .comment-list{
-  will-change: transform;
   overflow-y:auto;
   padding:12px;
   font-size:13px;
-  line-height:1.6;
-}
-
-.comment-input-area{
-  display:flex;
-  border-top:1px solid #eee;
 }
 
 /* =========================
-   カード
-========================= */
-.card{
-  background:var(--card-bg);
-  border-radius:12px;
-  overflow:hidden;
-  display:flex;
-  flex-direction:column;
-  cursor:pointer;
-  position:relative;
-  box-shadow:0 2px 6px rgba(0,0,0,0.05);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  padding: 6px;
-}
-
-/* ★修正：画像クリック阻害対策 */
-.image img {
-  pointer-events: auto;
-  cursor: pointer;
-}
-
-/* =========================
-   ボトムメニュー
+   ボトムバー
 ========================= */
 .bottom-bar{
   position:fixed;
   bottom:0;
   left:0;
   width:100%;
-  height: 50px;
+  height:50px;
   background:#fff;
   display:flex;
   justify-content:space-around;
@@ -493,27 +297,27 @@ html, body{
 }
 
 /* =========================
-   お知らせバー
+   アナウンスバー
 ========================= */
-#announcementBar {
-  position: fixed;
-  top: 70px;
-  left: 0;
-  width: 100%;
-  height: 40px;
-  background: var(--announcement-bg, #ffffff);
-  display: flex;
-  align-items: center;
-  z-index: 1100;
+#announcementBar{
+  position:fixed;
+  top:70px;
+  width:100%;
+  height:40px;
+  display:flex;
+  align-items:center;
+  overflow:hidden;
 }
 
-/* ★修正：アニメーション安定化 */
-.banner-text {
-  position: absolute;
-  white-space: nowrap;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 100%;
-  animation: bannerScroll 10s linear infinite;
-  will-change: transform;
+/* ★ここ重要：🟣原因になりやすい */
+.banner-text{
+  position:absolute;
+  white-space:nowrap;
+  animation:bannerScroll 10s linear infinite;
+}
+
+/* ★これが抜けるとエラー扱いになる */
+@keyframes bannerScroll{
+  0%{ transform:translateX(100%); }
+  100%{ transform:translateX(-100%); }
 }
