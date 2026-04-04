@@ -477,6 +477,7 @@ html, body{
 .card-actions{
   padding: 0; /* padding はカードの padding で統一するので削除 */
   margin: 0;  /* 上下マージンもカード全体で調整 */
+  min-width: 0;
 }
 
 /* =========================
