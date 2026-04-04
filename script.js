@@ -122,17 +122,13 @@ function initCardClicks() {
   const showcaseEl = document.getElementById("showcase");
   if (!showcaseEl) return;
 
-  // 既存イベントを削除して安全に置き換え
-  const newEl = showcaseEl.cloneNode(true);
-  showcaseEl.parentNode.replaceChild(newEl, showcaseEl);
-
-  newEl.addEventListener("click", e => {
+  showcaseEl.addEventListener("click", e => {
     const card = e.target.closest(".card");
     if (!card) return;
 
-    const cards = Array.from(newEl.querySelectorAll(".card"));
+    const cards = Array.from(showcaseEl.querySelectorAll(".card"));
     const index = cards.indexOf(card);
-    if (index === -1 || !items[index]) return;
+    if (index === -1) return;
 
     const item = items[index];
 
