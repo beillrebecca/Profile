@@ -150,12 +150,8 @@ function initCardClicks() {
     if (comment) {
     currentCommentIndex = index;
 
-    // モーダル表示
     const modal = document.getElementById("commentModal");
     if (modal) modal.style.display = "flex";
-
-    // コメント表示
-    openComments(index);
 
     return;
     }
