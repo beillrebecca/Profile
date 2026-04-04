@@ -529,7 +529,7 @@ html, body{
   display: flex;
   justify-content: center; /* ← 追加 */
   align-items: center;
-  gap: 4px;
+  gap: 2px;
 }
 
 .like-count {
