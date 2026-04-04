@@ -257,26 +257,6 @@ if (heart) {
     return;
   }
   
-  // 🗑 削除 ←ここに追加！！
-const deleteBtn = e.target.closest(".icon-delete");
-if (deleteBtn) {
-  const card = e.target.closest(".card");
-  if (!card) return;
-
-  const confirmDelete = confirm("このアイテムを削除する？");
-  if (!confirmDelete) return;
-
-  const showcaseEl = document.getElementById("showcase");
-  const cards = Array.from(showcaseEl.querySelectorAll(".card"));
-  const index = cards.indexOf(card);
-
-  if (index > -1) {
-    items.splice(index, 1);
-  }
-
-  card.remove();
-  return;
-}
   
   // 🔗 シェア
 const share = e.target.closest(".icon-share");
