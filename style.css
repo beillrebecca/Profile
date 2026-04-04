@@ -50,7 +50,7 @@ body{
 .top-bar *,
 .bottom-bar,
 .bottom-bar * {
-  font-family:system-ui;
+  font-family: var(--font-family, 'Source Han Sans JP', sans-serif);
 }
 
 html, body{
@@ -116,7 +116,7 @@ html, body{
 }
 
 /* =========================
-   メインコンテンツ
+   メイン
 ========================= */
 .main-content {
   display: flex;
@@ -124,6 +124,7 @@ html, body{
   flex-wrap: wrap;
   max-width: 1400px;
   margin: 0 auto;
+  padding-top: 10px;
 }
 
 /* ===== プロフィール欄 ===== */
@@ -213,7 +214,7 @@ html, body{
   border-radius: 6px;
   box-sizing: border-box;
   font-size: 13px;
-  line-height: 1.4px;
+  line-height: 1.4;
 }
 
 .profile-info {
