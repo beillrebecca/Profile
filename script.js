@@ -121,15 +121,29 @@ function createCard(item, index) {
 // ショーケース描画
 // =========================
 function renderShowcaseLight() {
+  alert("① render入った");
+
   const showcase = document.getElementById("showcase");
-  if (!showcase) return;
+  if (!showcase) {
+    alert("❌ showcaseが取得できてない");
+    return;
+  }
 
-  showcase.innerHTML = ""; // まずリセット
+  alert("② showcase取得OK");
 
-  // 🔹 安全にカード描画
+  showcase.innerHTML = "";
+
   items.forEach((item, index) => {
     try {
+      alert("③ カード作成開始 index=" + index);
+
       const card = createCard(item, index);
+
+      if (!card) {
+        alert("❌ cardが作られてない index=" + index);
+        return;
+      }
+
       showcase.appendChild(card);
 
       const nameEl = card.querySelector(".card-name");
@@ -144,11 +158,11 @@ function renderShowcaseLight() {
       }
 
     } catch (err) {
-      console.error("カード描画失敗", item, err);
+      alert("💥 カード描画エラー index=" + index + "\n" + err.message);
     }
   });
 
-  // 🔹 「新しいアイテム追加」関連コードは削除
+  alert("④ 全カード描画完了");
 }
 
 // =========================
