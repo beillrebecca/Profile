@@ -360,14 +360,19 @@ function setupImageUpload(imgEl, inputEl) {
 // DOMContentLoaded 初期化
 // =========================
 document.addEventListener("DOMContentLoaded", () => {
-  console.log("JS読み込まれた");
+  alert("① DOM読み込みOK");
 
-  renderShowcaseLight(); // ←🔥 これ追加（最重要）
+  renderShowcaseLight();
+  alert("② render実行OK");
 
   setupImageUpload(document.getElementById('headerImg'), document.getElementById('headerImgInput'));
+  alert("③ header画像OK");
+
   setupImageUpload(document.getElementById('avatarImg'), document.getElementById('avatarImgInput'));
+  alert("④ avatar画像OK");
 
   initCardClicks();
+  alert("⑤ クリック初期化OK");
 });
   
 
