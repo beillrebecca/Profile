@@ -474,5 +474,4 @@ function initFollowModal() {
     openComments(currentCommentIndex);
   });
 
-});
 
