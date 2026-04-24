@@ -510,12 +510,6 @@ html, body{
   gap: 4px;
 }
 
-.like-count {
-  font-size: 11px;
-  color: #666;
-  min-width: 10px;
-  text-align: left;
-}
 
 @keyframes pop {
   0% { transform: scale(1); }
